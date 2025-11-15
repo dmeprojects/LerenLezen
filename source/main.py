@@ -23,6 +23,14 @@ woorden = [
     "haan","pijn","hen","toen","boos"
 ]
 
+# --- Woorden inladen uit een textbestand ---
+def load_words(filename):
+    with open(filename, "r", encoding="utf-8") as f:
+        content = f.read().split()
+    return content
+
+woorden = load_words("D:\Github\LerenLezen\leesblaadjes\woorden_kern3.txt")
+
 random.shuffle(woorden)
 
 pygame.init()
@@ -40,16 +48,20 @@ font_info = pygame.font.SysFont("Arial", 40)
 green_check = pygame.image.load("D:\Github\LerenLezen\source\icons\green_check.png")
 red_check   = pygame.image.load("D:/Github/LerenLezen/source/icons/red_check.png")
 star_img    = pygame.image.load("D:\Github\LerenLezen\source\icons\star.jpg")
+happy_img   = pygame.image.load("D:\Github\LerenLezen\source\icons\happy.png")
+sad_img     = pygame.image.load("D:\Github\LerenLezen\source\icons\sad.png")
 
 # Alles naar uniforme grootte schalen
 green_check = pygame.transform.scale(green_check, (50, 50))
 red_check   = pygame.transform.scale(red_check,   (50, 50))
 star_img    = pygame.transform.scale(star_img,    (70, 70))
+sad_img     = pygame.transform.scale(sad_img,    (70, 70))
 
 # --- Scores ---
 good_checks_graphics = []   # lijst van groene check-afbeeldingen
 bad_checks_graphics  = []   # lijst van rode check-afbeeldingen
 stars_graphics       = []   # hoeveel sterren getoond zijn
+sad_graphics        =  []   # sad faces
 
 # --- Timing ---
 last_time = time.time()
@@ -95,6 +107,13 @@ def draw_screen():
     for st in stars_graphics:
         screen.blit(star_img, (x, y))
         x += 80
+        
+    # --- Sad faces tekenen ---
+    x = WIDTH - (len(sad_graphics) * 80) - 20
+    y = 100
+    for st in sad_graphics:
+        screen.blit(sad_img, (x, y))
+        x += 80
 
     pygame.display.flip()
 
@@ -132,6 +151,10 @@ while True:
                 # FOUT
                 if event.key == pygame.K_LEFT:
                     bad_checks_graphics.append(red_check)
+                    
+                    if len(bad_checks_graphics) == 10:
+                        sad_graphics.append(sad_img)
+                        bad_checks_graphics = []
 
                 # Nieuw woord tonen
                 current_word = new_word()
