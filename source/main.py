@@ -28,53 +28,76 @@ random.shuffle(woorden)
 pygame.init()
 
 # --- Scherm ---
-WIDTH, HEIGHT = 900, 600
+WIDTH, HEIGHT = 1000, 700
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Woorden oefenen - met score en WPM")
+pygame.display.set_caption("Woorden oefenen - checks en sterren")
 
 # --- Lettertypes ---
 font_word = pygame.font.SysFont("Arial", 150)
 font_info = pygame.font.SysFont("Arial", 40)
 
+# --- Afbeeldingen laden ---
+green_check = pygame.image.load("D:\Github\LerenLezen\source\icons\green_check.png")
+red_check   = pygame.image.load("D:/Github/LerenLezen/source/icons/red_check.png")
+star_img    = pygame.image.load("D:\Github\LerenLezen\source\icons\star.jpg")
+
+# Alles naar uniforme grootte schalen
+green_check = pygame.transform.scale(green_check, (50, 50))
+red_check   = pygame.transform.scale(red_check,   (50, 50))
+star_img    = pygame.transform.scale(star_img,    (70, 70))
+
 # --- Scores ---
-good_count = 0
-bad_count = 0
-stars = 0
+good_checks_graphics = []   # lijst van groene check-afbeeldingen
+bad_checks_graphics  = []   # lijst van rode check-afbeeldingen
+stars_graphics       = []   # hoeveel sterren getoond zijn
 
 # --- Timing ---
 last_time = time.time()
 wpm = 0
 
-# --- Index ---
-index = 0
+# --- Initieel woord ---
+current_word = woorden[0]
 
 def new_word():
-    """Selecteer een nieuw willekeurig woord"""
     random.shuffle(woorden)
     return woorden[0]
-
-current_word = new_word()
 
 def draw_screen():
     screen.fill((255, 255, 255))
 
-    # --- Woord ---
+    # --- Woord in het midden ---
     word_surface = font_word.render(current_word, True, (0, 0, 0))
     rect = word_surface.get_rect(center=(WIDTH // 2, HEIGHT // 2))
     screen.blit(word_surface, rect)
 
-    # --- Score en statistieken ---
-    info_text = f"Goed: {good_count}   Fout: {bad_count}   WPM: {int(wpm)}"
+    # --- Informatie ---
+    info_text = f"WPM: {int(wpm)}"
     info_surface = font_info.render(info_text, True, (0, 0, 0))
     screen.blit(info_surface, (20, 20))
 
-    # --- Sterren ---
-    star_text = "⭐" * stars
-    if stars > 0:
-        star_surface = font_info.render(star_text, True, (0, 0, 0))
-        screen.blit(star_surface, (20, 70))
+    # --- Groene checks tekenen ---
+    x = 20
+    y = HEIGHT - 80
+    for chk in good_checks_graphics:
+        screen.blit(green_check, (x, y))
+        x += 60
+
+    # --- Rode checks tekenen ---
+    x = 20
+    y = HEIGHT - 150
+    for chk in bad_checks_graphics:
+        screen.blit(red_check, (x, y))
+        x += 60
+
+    # --- Sterren tekenen ---
+    x = WIDTH - (len(stars_graphics) * 80) - 20
+    y = 20
+    for st in stars_graphics:
+        screen.blit(star_img, (x, y))
+        x += 80
 
     pygame.display.flip()
+
 
 draw_screen()
 
@@ -86,7 +109,6 @@ while True:
             sys.exit()
 
         if event.type == pygame.KEYDOWN:
-
             if event.key in (pygame.K_RIGHT, pygame.K_LEFT):
 
                 # Tijd meten
@@ -94,21 +116,23 @@ while True:
                 elapsed = now - last_time
                 last_time = now
 
-                # WPM berekenen (woorden per minuut)
+                # WPM
                 if elapsed > 0:
                     wpm = 60 / elapsed
 
-                # Score updaten
-                if event.key == pygame.K_RIGHT:  # juist
-                    good_count += 1
+                # GOED
+                if event.key == pygame.K_RIGHT:
+                    good_checks_graphics.append(green_check)
 
-                    # Elke 10 goede woorden → sterretje erbij
-                    if good_count % 10 == 0:
-                        stars += 1
+                    # Elke 10 groene checks → 1 ster
+                    if len(good_checks_graphics) == 10:
+                        stars_graphics.append(star_img)
+                        good_checks_graphics = []  # reset groene checks
 
-                elif event.key == pygame.K_LEFT:  # fout
-                    bad_count += 1
+                # FOUT
+                if event.key == pygame.K_LEFT:
+                    bad_checks_graphics.append(red_check)
 
-                # Nieuw woord
+                # Nieuw woord tonen
                 current_word = new_word()
                 draw_screen()
