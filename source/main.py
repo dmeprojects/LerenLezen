@@ -3,25 +3,6 @@ import sys
 import random
 import time
 
-# --- Woordenlijst ---
-woorden = [
-    "dip","rijk","doop","hoek","boem",
-    "koek","ijs","doos","hoes","poes",
-    "dik","daar","hij","zoom","rij",
-    "boen","soep","zee","hijs","den",
-    "been","voer","raam","bij","oor",
-    "haas","zit","boer","dijk","zoem",
-    "hip","dit","moet","hees","zeer",
-    "hoop","bijt","zes","poen","heet",
-    "roep","zoek","rijp","door","hik",
-    "doen","daan","rijm","zet","pit",
-    "hoor","koen","peer","zoet","kijk",
-    "voet","haar","zijn","deen","toet",
-    "zeep","kaas","hek","beek","doek",
-    "hit","beer","vaas","zoen","haas",
-    "boek","mijn","haat","zaak","boot",
-    "haan","pijn","hen","toen","boos"
-]
 
 # --- Woorden inladen uit een textbestand ---
 def load_words(filename):
@@ -29,7 +10,7 @@ def load_words(filename):
         content = f.read().split()
     return content
 
-woorden = load_words("D:\Github\LerenLezen\leesblaadjes\woorden_kern3.txt")
+woorden = load_words("./leesblaadjes/woorden kern_4a.txt")
 
 random.shuffle(woorden)
 
