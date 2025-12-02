@@ -11,18 +11,22 @@ def load_words(filename):
     return content
 
 woorden = load_words("./leesblaadjes/woorden kern_4a.txt")
+woorden.extend ( load_words("./leesblaadjes/woorden_kern_4b.txt"))
+woorden.insert(1, "hottentottententtentoonstellinskaartjesknipschaar")
+woorden.insert(1, "poep")
+woorden.insert(1, "Daan is aan zee")
 
 random.shuffle(woorden)
 
 pygame.init()
 
 # --- Scherm ---
-WIDTH, HEIGHT = 1000, 700
+WIDTH, HEIGHT = 1600, 700
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Woorden oefenen - checks en sterren")
 
 # --- Lettertypes ---
-font_word = pygame.font.SysFont("Arial", 150)
+font_word = pygame.font.SysFont("Arial", 180)
 font_info = pygame.font.SysFont("Arial", 40)
 
 # --- Afbeeldingen laden ---
@@ -128,6 +132,7 @@ while True:
                     if len(good_checks_graphics) == 10:
                         stars_graphics.append(star_img)
                         good_checks_graphics = []  # reset groene checks
+                        bad_checks_graphics = []   # reset rode checks
 
                 # FOUT
                 if event.key == pygame.K_LEFT:
@@ -136,6 +141,7 @@ while True:
                     if len(bad_checks_graphics) == 10:
                         sad_graphics.append(sad_img)
                         bad_checks_graphics = []
+                        good_checks_graphics= []
 
                 # Nieuw woord tonen
                 current_word = new_word()
