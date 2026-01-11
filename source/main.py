@@ -10,7 +10,8 @@ def load_words(filename):
         content = f.read().split()
     return content
 
-woorden = load_words("./leesblaadjes/woorden_kern_5.txt")
+#woorden = load_words("./leesblaadjes/woorden_kern_5.txt")
+woorden = load_words("./leesblaadjes/woorden_kern5_2.txt")
 #woorden.extend ( load_words("./leesblaadjes/woorden_kern_4b.txt"))
 #woorden.insert(1, "hottentottententtentoonstelling")
 random.shuffle(woorden)
