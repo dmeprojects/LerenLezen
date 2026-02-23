@@ -11,7 +11,7 @@ def load_words(filename):
     return content
 
 #woorden = load_words("./leesblaadjes/woorden_kern_5.txt")
-woorden = load_words("./leesblaadjes/woorden_kern6_au_ui.txt")
+woorden = load_words("./leesblaadjes/woorden_kern7.txt")
 #woorden.extend ( load_words("./leesblaadjes/woorden_kern_4b.txt"))
 #woorden.insert(1, "hottentottententtentoonstelling")
 random.shuffle(woorden)
