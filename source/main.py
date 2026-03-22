@@ -3,6 +3,8 @@ import sys
 import random
 import time
 
+woorden = []
+
 
 # --- Woorden inladen uit een textbestand ---
 def load_words(filename):
@@ -11,7 +13,7 @@ def load_words(filename):
     return content
 
 #woorden = load_words("./leesblaadjes/woorden_kern_5.txt")
-woorden = load_words("./leesblaadjes/woorden_kern7.txt")
+woorden = load_words("./leesblaadjes/woorden_8.txt")
 #woorden.extend ( load_words("./leesblaadjes/woorden_kern_4b.txt"))
 #woorden.insert(1, "hottentottententtentoonstelling")
 random.shuffle(woorden)
@@ -53,9 +55,15 @@ wpm = 0
 # --- Initieel woord ---
 current_word = woorden[0]
 
-def new_word():
+def new_word():  
+    global woorden
+      
+    if not woorden:
+        woorden = load_words("./leesblaadjes/woorden_8.txt")
+    
     random.shuffle(woorden)
-    return woorden[0]
+    current_word = woorden.pop(0)    
+    return current_word
 
 def draw_screen():
     screen.fill((255, 255, 255))
