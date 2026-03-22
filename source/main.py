@@ -4,6 +4,7 @@ import random
 import time
 
 woorden = []
+words_left = 0
 
 
 # --- Woorden inladen uit een textbestand ---
@@ -17,6 +18,9 @@ woorden = load_words("./leesblaadjes/woorden_8.txt")
 #woorden.extend ( load_words("./leesblaadjes/woorden_kern_4b.txt"))
 #woorden.insert(1, "hottentottententtentoonstelling")
 random.shuffle(woorden)
+words_left = len(woorden)
+
+
 
 pygame.init()
 
@@ -57,12 +61,15 @@ current_word = woorden[0]
 
 def new_word():  
     global woorden
+    global words_left
       
     if not woorden:
         woorden = load_words("./leesblaadjes/woorden_8.txt")
     
+    
     random.shuffle(woorden)
-    current_word = woorden.pop(0)    
+    current_word = woorden.pop(0)   
+    words_left = len(woorden) 
     return current_word
 
 def draw_screen():
@@ -77,6 +84,11 @@ def draw_screen():
     info_text = f"WPM: {int(wpm)}"
     info_surface = font_info.render(info_text, True, (0, 0, 0))
     screen.blit(info_surface, (20, 20))
+    
+    # --- Informatie ---
+    info_text = f"Words left: {int(words_left)}"
+    info_surface = font_info.render(info_text, True, (0, 0, 0))
+    screen.blit(info_surface, (20, 60))
 
     # --- Groene checks tekenen ---
     x = 20
@@ -128,7 +140,9 @@ while True:
 
                 # WPM
                 if elapsed > 0:
-                    wpm = 60 / elapsed
+                    wpm = 60 / elapsed       
+
+                
 
                 # GOED
                 if event.key == pygame.K_RIGHT:
@@ -150,5 +164,8 @@ while True:
                         good_checks_graphics= []
 
                 # Nieuw woord tonen
-                current_word = new_word()
+                if (words_left):
+                    current_word = new_word()
+                else:
+                    current_word = "Je bent klaar"
                 draw_screen()
