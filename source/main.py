@@ -6,6 +6,8 @@ import time
 woorden = []
 words_left = 0
 
+word_file = "./leesblaadjes/huiswerk_lezen.txt"
+
 
 # --- Woorden inladen uit een textbestand ---
 def load_words(filename):
@@ -13,10 +15,10 @@ def load_words(filename):
         content = f.read().split()
     return content
 
-#woorden = load_words("./leesblaadjes/woorden_kern_5.txt")
-woorden = load_words("./leesblaadjes/woorden_8.txt")
+woorden = load_words(word_file)
+#woorden = load_words("./leesblaadjes/woorden_8.txt")
 #woorden.extend ( load_words("./leesblaadjes/woorden_kern_4b.txt"))
-#woorden.insert(1, "hottentottententtentoonstelling")
+#woorden.insert(1, "casper is stout")
 random.shuffle(woorden)
 words_left = len(woorden)
 
@@ -63,8 +65,8 @@ def new_word():
     global woorden
     global words_left
       
-    if not woorden:
-        woorden = load_words("./leesblaadjes/woorden_8.txt")
+    if words_left == 0:
+        woorden = load_words(word_file)
     
     
     random.shuffle(woorden)
