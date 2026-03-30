@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LerenLezen</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <main class="container">
+    <div class="topbar">
+      <div>WPM: <span id="wpm">0</span></div>
+      <div>Words left: <span id="words-left">0</span></div>
+    </div>
+
+    <section class="word-panel">
+      <div id="current-word" class="word">...</div>
+    </section>
+
+    <section class="score-panel">
+      <div>Good: <span id="good-checks">0</span></div>
+      <div>Bad: <span id="bad-checks">0</span></div>
+      <div>Stars: <span id="stars">0</span></div>
+      <div>Sad: <span id="sads">0</span></div>
+    </section>
+
+    <section class="buttons">
+      <button id="wrong-btn" class="wrong">Wrong</button>
+      <button id="correct-btn" class="correct">Correct</button>
+    </section>
+
+    <section class="buttons secondary">
+      <button id="reset-btn">Reset</button>
+    </section>
+
+    <p class="hint">Keyboard: left arrow = wrong, right arrow = correct</p>
+  </main>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
