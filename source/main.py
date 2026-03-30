@@ -6,7 +6,7 @@ import time
 woorden = []
 words_left = 0
 
-word_file = "./leesblaadjes/huiswerk_lezen.txt"
+word_file = "./leesblaadjes/woorden_8a.txt"
 
 
 # --- Woorden inladen uit een textbestand ---
@@ -16,7 +16,7 @@ def load_words(filename):
     return content
 
 woorden = load_words(word_file)
-#woorden = load_words("./leesblaadjes/woorden_8.txt")
+#woorden = load_words("./leesblaadjes/woorden_8a.txt")
 #woorden.extend ( load_words("./leesblaadjes/woorden_kern_4b.txt"))
 #woorden.insert(1, "casper is stout")
 random.shuffle(woorden)
