@@ -2,15 +2,15 @@ from flask import Flask, jsonify, render_template, request
 from pathlib import Path
 import random
 import time
-from typing import List
+
 
 app = Flask(__name__)
 
 BASE_DIR = Path(__file__).resolve().parent
 WORD_FILE = BASE_DIR  / "words" / "woorden_8a.txt"
 
-
-def load_words(filename: Path) -> list[str]:
+from typing import List
+def load_words(filename: Path) -> List[str]:
     with open(filename, "r", encoding="utf-8") as f:
         return f.read().split()
 
