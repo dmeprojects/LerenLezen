@@ -2,6 +2,7 @@ from flask import Flask, jsonify, render_template, request
 from pathlib import Path
 import random
 import time
+from typing import List
 
 app = Flask(__name__)
 
